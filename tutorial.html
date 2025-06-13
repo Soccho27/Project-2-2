@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriConnect - Tutorials</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #1f2937;
+            min-height: 100vh;
+            background-color: #f9fafb;
+        }
+
+        /* Header */
+
+        /* copied from home nav */
+        .containerNav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header Styles */
+        .header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 2rem;
+            height: 2rem;
+            color: #16a34a;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #166534;
+        }
+
+        .nav-links {
+            /* display: none; */
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            color: #6b7280;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        /* @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+            }
+        } */
+
+        .nav-links a:hover {
+            color: #16a34a;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-outline {
+            border: 1px solid #16a34a;
+            color: #16a34a;
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: #f0fdf4;
+        }
+
+        .btn-primary {
+            background: #16a34a;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #15803d;
+        }
+
+        .btn-lg {
+            padding: 0.75rem 2rem;
+            font-size: 1.125rem;
+        }
+        /*// copied from home nav */
+
+        /* AI button */
+        .AIchat-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 50px;
+            height: 50px;
+            background-color: #16a34a;
+            border-radius: 50%;
+            border-color: transparent;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.5s ease;
+            z-index: 1000;
+        }
+
+        .AIchat-btn:hover {
+            transform: scale(1.07);
+            background-color: #166534;
+        }
+
+        .AIchat-btn svg {
+            width: 23px;
+            height: 23px;
+            stroke: white;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .hero-description {
+            color: #6b7280;
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-container {
+            max-width: 24rem;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1rem;
+            height: 1rem;
+            color: #9ca3af;
+        }
+
+        /* Tutorial Grid */
+        .tutorial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .tutorial-card {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tutorial-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .tutorial-image {
+            height: 12rem;
+            overflow: hidden;
+        }
+
+        .tutorial-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .tutorial-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tutorial-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+
+        .tutorial-description {
+            color: #6b7280;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .tutorial-meta {
+            display: flex;
+            align-items: center;
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .tutorial-meta svg {
+            width: 1rem;
+            height: 1rem;
+            margin-right: 0.25rem;
+        }
+
+        .tutorial-meta span {
+            margin-right: 1rem;
+        }
+
+        .tutorial-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background-color: #dcfce7;
+            color: #166534;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .tutorial-button {
+            background-color: #059669;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .tutorial-button:hover {
+            background-color: #047857;
+        }
+
+        /* Categories */
+        .categories-section {
+            margin: 3rem 0;
+        }
+
+        .categories-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .category-icon {
+            width: 3rem;
+            height: 3rem;
+            margin: 0 auto 1rem;
+            background-color: #f0fdf4;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #059669;
+        }
+
+        .category-name {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-count {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        @media (min-width: 768px) {
+            nav {
+                display: flex;
+            }
+
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .container {
+                padding: 3rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+     <!--/* copied from home nav */-->
+    <header class="header">
+        <div class="containerNav">
+            <nav class="nav">
+                <a href="#" class="logo">
+                    <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/>
+                        <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+                    </svg>
+                    <span class="logo-text">AgriConnect</span>
+                </a>
+                <div class="nav-links">
+                    
+                    <a href="#home", id = "home">Home</a>
+                    <a href="#marketplace", id = "market">Marketplace</a>
+                    <a href="#weather", id = "Weather">Weather</a>
+                    <a href="#blog", id = "Blog">Blog</a>
+                    <a href="#agridoctor", id = "AgriDoctor">AgriDoctor</a>
+                </div>
+                <div class="nav-buttons">
+                    <a href="#" class="btn btn-outline" id = "logIn">Login</a>
+                    <a href="#" class="btn btn-primary" id = "signUp">Sign Up</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <!--/*// copied from home nav */-->
+
+    <!-- AI button -->
+     <button class="AIchat-btn" onclick="window.location.href = 'agridoc.html'">
+        <svg viewBox="0 0 24 24">
+            <path d="M21.05 11.5a9.5 9.5 0 0 1-14.37 8.17L3 21l1.36-4.13a9.5 9.5 0 1 1 16.69-5.37z"/>
+        </svg>
+    </button>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <h1 class="hero-title">Agricultural Tutorials</h1>
+            <p class="hero-description">
+                Learn from expert farmers and agricultural specialists through our comprehensive video tutorials
+            </p>
+            <div class="search-container">
+                <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search tutorials..." />
+            </div>
+        </div>
+
+        <!-- Categories Section -->
+        <div class="categories-section">
+            <h2 class="categories-title">Browse by Category</h2>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"/>
+                        </svg>
+                    </div>
+                    <div class="category-name">Crop Management</div>
+                    <div class="category-count">25 tutorials</div>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/>
+                        </svg>
+                    </div>
+                    <div class="category-name">Irrigation</div>
+                    <div class="category-count">18 tutorials</div>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="category-name">Pest Control</div>
+                    <div class="category-count">22 tutorials</div>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                        </svg>
+                    </div>
+                    <div class="category-name">Soil Health</div>
+                    <div class="category-count">15 tutorials</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tutorial Grid -->
+        <div class="tutorial-grid">
+            <div class="tutorial-card">
+                <div class="tutorial-image">
+                    <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=1000&auto=format&fit=crop" alt="Irrigation Systems" />
+                </div>
+                <div class="tutorial-content">
+                    <h3 class="tutorial-title">Modern Irrigation Techniques</h3>
+                    <p class="tutorial-description">
+                        Learn about drip irrigation, sprinkler systems, and water conservation methods for optimal crop yield.
+                    </p>
+                    <div class="tutorial-meta">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                        </svg>
+                        <span>Dr. Sarah Johnson</span>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span>45 min</span>
+                    </div>
+                    <div class="tutorial-tags">
+                        <span class="tag">Irrigation</span>
+                        <span class="tag">Water Management</span>
+                        <span class="tag">Beginner</span>
+                    </div>
+                    <a href="#" class="tutorial-button">Watch Tutorial</a>
+                </div>
+            </div>
+
+            <div class="tutorial-card">
+                <div class="tutorial-image">
+                    <img src="https://images.unsplash.com/photo-1592921870583-aeafb0639ffe?q=80&w=1000&auto=format&fit=crop" alt="Organic Farming" />
+                </div>
+                <div class="tutorial-content">
+                    <h3 class="tutorial-title">Organic Tomato Farming</h3>
+                    <p class="tutorial-description">
+                        Master the art of growing healthy, pesticide-free tomatoes using organic farming methods.
+                    </p>
+                    <div class="tutorial-meta">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                        </svg>
+                        <span>Michael Chen</span>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span>32 min</span>
+                    </div>
+                    <div class="tutorial-tags">
+                        <span class="tag">Organic</span>
+                        <span class="tag">Tomatoes</span>
+                        <span class="tag">Intermediate</span>
+                    </div>
+                    <a href="#" class="tutorial-button">Watch Tutorial</a>
+                </div>
+            </div>
+
+            <div class="tutorial-card">
+                <div class="tutorial-image">
+                    <img src="https://images.unsplash.com/photo-1595356180904-09adbbbe7ad0?q=80&w=1000&auto=format&fit=crop" alt="Pest Control" />
+                </div>
+                <div class="tutorial-content">
+                    <h3 class="tutorial-title">Natural Pest Control Methods</h3>
+                    <p class="tutorial-description">
+                        Protect your crops from pests using eco-friendly and sustainable pest control techniques.
+                    </p>
+                    <div class="tutorial-meta">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                        </svg>
+                        <span>Lisa Martinez</span>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span>28 min</span>
+                    </div>
+                    <div class="tutorial-tags">
+                        <span class="tag">Pest Control</span>
+                        <span class="tag">Natural</span>
+                        <span class="tag">Advanced</span>
+                    </div>
+                    <a href="#" class="tutorial-button">Watch Tutorial</a>
+                </div>
+            </div>
+
+            <div class="tutorial-card">
+                <div class="tutorial-image">
+                    <img src="https://images.unsplash.com/photo-1590682680695-43b964a3ae17?q=80&w=1000&auto=format&fit=crop" alt="Soil Health" />
+                </div>
+                <div class="tutorial-content">
+                    <h3 class="tutorial-title">Soil Health Assessment</h3>
+                    <p class="tutorial-description">
+                        Learn how to test and improve your soil quality for better crop growth and yield.
+                    </p>
+                    <div class="tutorial-meta">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                        </svg>
+                        <span>Dr. Robert Smith</span>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span>38 min</span>
+                    </div>
+                    <div class="tutorial-tags">
+                        <span class="tag">Soil Health</span>
+                        <span class="tag">Testing</span>
+                        <span class="tag">Beginner</span>
+                    </div>
+                    <a href="#" class="tutorial-button">Watch Tutorial</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple search functionality
+        document.querySelector('.search-input').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const tutorialCards = document.querySelectorAll('.tutorial-card');
+            
+            tutorialCards.forEach(card => {
+                const title = card.querySelector('.tutorial-title').textContent.toLowerCase();
+                const description = card.querySelector('.tutorial-description').textContent.toLowerCase();
+                const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent.toLowerCase());
+                
+                const matches = title.includes(searchTerm) || 
+                               description.includes(searchTerm) || 
+                               tags.some(tag => tag.includes(searchTerm));
+                
+                card.style.display = matches ? 'flex' : 'none';
+            });
+        });
+
+        // Category click functionality
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const categoryName = this.querySelector('.category-name').textContent.toLowerCase();
+                console.log('Filter by category:', categoryName);
+                // Here you would implement category filtering
+            });
+        });
+    </script>
+    <script src="pageTransform.js"></script>
+</body>
+</html>
